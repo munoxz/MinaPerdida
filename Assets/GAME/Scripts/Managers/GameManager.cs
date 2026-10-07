@@ -145,6 +145,25 @@ public class GameManager : MonoBehaviour
         return sb.ToString().TrimEnd();
     }
 
+    // Recursos gastados en mecanismos (ej: baterías usadas en palancas).
+    // El Dictionary guarda lo RECOLECTADO, así que no se le resta: se lleva aparte lo usado.
+    private Dictionary<string, int> recursosUsados = new Dictionary<string, int>();
+
+    public int DisponiblesDe(string tipo)
+    {
+        int usados = recursosUsados.TryGetValue(tipo, out int u) ? u : 0;
+        return CantidadDe(tipo) - usados;
+    }
+
+    // Gasta una unidad del tipo si hay disponible. Devuelve true si se pudo usar.
+    public bool UsarRecurso(string tipo)
+    {
+        if (DisponiblesDe(tipo) <= 0) return false;
+        if (!recursosUsados.ContainsKey(tipo)) recursosUsados[tipo] = 0;
+        recursosUsados[tipo]++;
+        return true;
+    }
+
     // ===================== GOLPES Y MUERTES =====================
 
     public void RegistrarGolpe(string causa)
