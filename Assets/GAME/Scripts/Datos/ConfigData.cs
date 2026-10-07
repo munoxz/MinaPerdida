@@ -76,4 +76,5 @@ public class JefeConfig
     public List<float> velocidadPorFase;
     public List<int> danoPorFase;
     public int puntosVictoria;
+    public int danoPisoton; // campo propio: vida que pierde el jefe por cada pisotón
 }
