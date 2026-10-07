@@ -7,6 +7,9 @@ public class EnemigoPatrulla : MonoBehaviour
     public Transform puntoA;
     public Transform puntoB;
 
+    [Tooltip("Marcar si el dibujo original mira hacia la izquierda")]
+    public bool spriteMiraIzquierda = false;
+
     private Peligro peligro;
     private SpriteRenderer sr;
     private Vector3 a, b, destino;
@@ -28,6 +31,7 @@ public class EnemigoPatrulla : MonoBehaviour
         if (Vector3.Distance(transform.position, destino) < 0.05f)
             destino = (destino == b) ? a : b;
 
-        if (sr != null) sr.flipX = destino.x < transform.position.x;
+        bool vaIzquierda = destino.x < transform.position.x;
+        if (sr != null) sr.flipX = spriteMiraIzquierda ? !vaIzquierda : vaIzquierda;
     }
 }

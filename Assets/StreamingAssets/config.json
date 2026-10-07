@@ -19,7 +19,8 @@
   ],
   "peligros": [
     { "id": "murcielago", "tipo": "enemigo", "dano": 1, "velocidad": 2 },
-    { "id": "pinchos", "tipo": "obstaculo", "dano": 1, "velocidad": 0 }
+    { "id": "pinchos", "tipo": "obstaculo", "dano": 1, "velocidad": 0 },
+    { "id": "escorpion", "tipo": "enemigo", "dano": 1, "velocidad": 1.5 }
   ],
   "jefe": {
     "vida": 100,
