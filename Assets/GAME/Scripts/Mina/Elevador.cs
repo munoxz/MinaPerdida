@@ -15,6 +15,7 @@ public class Elevador : MonoBehaviour
         if (gm.CumpleRequisitoJefe(out string faltantes))
         {
             activado = true;
+            AudioManager.Sonar(a => a.elevador);
             c.GetComponent<PlayerController>().PuedeMoverse = false;
 
             MinaController mina = FindFirstObjectByType<MinaController>();

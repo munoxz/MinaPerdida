@@ -10,7 +10,7 @@ public static class JsonService
     public static string Error { get; private set; }
 
     public static string RutaConfig => Path.Combine(Application.streamingAssetsPath, "config.json");
-    public static string RutaResumen => Path.Combine(Application.persistentDataPath, "resumen_partida.json");
+    public static string RutaResumen => Application.persistentDataPath + "/resumen_partida.json"; // con '/' para que se muestre bien en pantalla
 
     // Lee config.json. Si falla, NO cierra el juego: guarda el error y devuelve false.
     public static bool CargarConfig()

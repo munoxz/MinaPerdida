@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using TMPro;
 
 // El jefe de la guarida. Vida, fases, velocidad y daño vienen de config.json (jefe).
-// Se le hace daño con un pisotón (saltarle encima).
+// Se le hace daño con la espada del jugador (tecla Z).
 public class Jefe : MonoBehaviour
 {
     [Header("Puntos de la guarida (mínimo 3)")]
@@ -20,6 +20,9 @@ public class Jefe : MonoBehaviour
     public float pausaFase1 = 1.2f;
     public float pausaFase2 = 0.3f;
     public float invulnerableTrasGolpe = 0.6f;
+
+    [Tooltip("Marcar si el dibujo original mira hacia la izquierda")]
+    public bool spriteMiraIzquierda = false;
 
     private JefeConfig cfg;
     private int vidaMax, vida, fase;          // fase: 0, 1, 2 (se muestran como 1, 2, 3)
@@ -100,7 +103,7 @@ public class Jefe : MonoBehaviour
         float antes = transform.position.x;
         transform.position = Vector3.MoveTowards(transform.position, objetivo, velocidad * Time.deltaTime);
         float dx = transform.position.x - antes;
-        if (Mathf.Abs(dx) > 0.0001f) sr.flipX = dx > 0; // el dibujo mira a la izquierda
+        if (Mathf.Abs(dx) > 0.0001f) sr.flipX = spriteMiraIzquierda ? dx > 0 : dx < 0;
     }
 
     void OnTriggerStay2D(Collider2D c)
@@ -109,19 +112,14 @@ public class Jefe : MonoBehaviour
         PlayerVida pv = c.GetComponent<PlayerVida>();
         if (pv == null) return;
 
-        Rigidbody2D rbJugador = c.attachedRigidbody;
-        bool pisoton = c.bounds.min.y > col.bounds.center.y + 0.2f && rbJugador.linearVelocity.y <= 0.1f;
+        // Tocar al jefe hace daño según la fase actual (danoPorFase del JSON)
+        pv.RecibirDano(cfg.danoPorFase[fase], Causas.Jefe);
+    }
 
-        if (pisoton)
-        {
-            // Rebota con la fuerza de salto del JSON y le hace daño al jefe
-            rbJugador.linearVelocity = new Vector2(rbJugador.linearVelocity.x, JsonService.Config.jugador.fuerzaSalto);
-            RecibirDano(cfg.danoPisoton);
-        }
-        else
-        {
-            pv.RecibirDano(cfg.danoPorFase[fase], Causas.Jefe);
-        }
+    // La llama el jugador cuando su espada golpea al jefe (daño = danoEspada del JSON)
+    public void RecibirAtaqueEspada()
+    {
+        RecibirDano(cfg.danoEspada);
     }
 
     public void RecibirDano(int dano)
@@ -132,6 +130,7 @@ public class Jefe : MonoBehaviour
         ActualizarBarra();
         if (vida <= 0) { Morir(); return; }
 
+        AudioManager.Sonar(a => a.golpeJefe);
         StartCoroutine(Parpadeo());
 
         // Cambio de fase según los umbrales del JSON (100, 66, 33)
@@ -183,6 +182,7 @@ public class Jefe : MonoBehaviour
         if (anim != null) anim.enabled = false;
         sr.color = new Color(1, 1, 1, 0.4f);
 
+        AudioManager.Sonar(a => a.victoria);
         if (GameManager.Instance != null) GameManager.Instance.AgregarPuntos(cfg.puntosVictoria);
         Mensaje("¡Derrotaste a la criatura!  +" + cfg.puntosVictoria);
 

@@ -32,6 +32,7 @@ public class Palanca : MonoBehaviour, IInteractuable
         }
 
         activada = true;
+        AudioManager.Sonar(a => a.palanca);
         if (sr != null && spriteEncendida != null) sr.sprite = spriteEncendida;
 
         // Queue: se encolan los eventos y el procesador los atiende en orden

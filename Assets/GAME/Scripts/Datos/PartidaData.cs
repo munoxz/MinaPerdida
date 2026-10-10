@@ -56,7 +56,7 @@ public class CheckpointData
 public class EscenaResumen
 {
     public string nombre;
-    public float tiempo;
+    public double tiempo;   // double: se escribe limpio en el JSON (ej: 28.7)
     public int puntaje;
     public int objetos;
     public int golpes;
@@ -86,7 +86,7 @@ public class ResumenPartida
     public string jugador;
     public string resultado;
     public int puntajeTotal;
-    public float tiempoTotal;
+    public double tiempoTotal;
     public List<EscenaResumen> escenas = new List<EscenaResumen>();
     public List<RecursoCantidad> recursos = new List<RecursoCantidad>();
     public int totalObjetos;

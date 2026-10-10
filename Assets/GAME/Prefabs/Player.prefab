@@ -205,6 +205,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   distanciaSuelo: 0.1
   distanciaInteraccion: 1.2
+  tiempoEntreAtaques: 0.45
+  retrasoGolpe: 0.12
+  tamanoGolpe: {x: 1.7, y: 1.3}
 --- !u!114 &4625664714718400837
 MonoBehaviour:
   m_ObjectHideFlags: 0

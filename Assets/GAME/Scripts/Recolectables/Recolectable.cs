@@ -54,6 +54,8 @@ public class Recolectable : MonoBehaviour
 
         if (HUDController.Instance != null) HUDController.Instance.MostrarMensaje(mensaje, 2f);
 
+        AudioManager.Sonar(a => a.recoger);
+
         // Desaparece de la escena
         Destroy(gameObject);
     }

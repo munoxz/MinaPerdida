@@ -47,7 +47,7 @@ public class PanelEstadisticas : MonoBehaviour
         d.AppendLine("<b>Checkpoints activados:</b> " + r.checkpoints);
         textoDetalle.text = d.ToString();
 
-        textoRuta.text = "resumen_partida.json guardado en:\n" + ruta;
+        textoRuta.text = "resumen_partida.json guardado en:\n" + ruta.Replace("\\", "/");
     }
 
     EscenaResumen Buscar(ResumenPartida r, string nombre)

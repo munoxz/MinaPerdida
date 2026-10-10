@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
     private string escenaCronometro;
 
     public string EscenaActual => SceneManager.GetActiveScene().name;
-    public float TiempoEscenaActual => ObtenerEscena(EscenaActual).tiempo;
+    public float TiempoEscenaActual => (float)ObtenerEscena(EscenaActual).tiempo;
 
     void Awake()
     {
@@ -205,12 +205,24 @@ public class GameManager : MonoBehaviour
         r.resultado = resultado;
         r.puntajeTotal = Puntaje;
 
+        // Copia de cada escena con el tiempo redondeado a 1 decimal.
+        // El total se suma con los valores ya redondeados para que cuadre exacto.
         foreach (string nombre in ordenEscenas)
         {
             EscenaResumen e = estadisticas[nombre];
-            r.escenas.Add(e);
-            r.tiempoTotal += e.tiempo;
+            EscenaResumen copia = new EscenaResumen
+            {
+                nombre = e.nombre,
+                tiempo = System.Math.Round(e.tiempo, 1),
+                puntaje = e.puntaje,
+                objetos = e.objetos,
+                golpes = e.golpes,
+                muertes = e.muertes
+            };
+            r.escenas.Add(copia);
+            r.tiempoTotal += copia.tiempo;
         }
+        r.tiempoTotal = System.Math.Round(r.tiempoTotal, 1);
 
         // El Dictionary no se puede serializar: se convierte a lista de pares
         foreach (KeyValuePair<string, int> par in RecursosPorTipo)

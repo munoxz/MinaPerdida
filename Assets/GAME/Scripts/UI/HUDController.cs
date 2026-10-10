@@ -61,6 +61,12 @@ public class HUDController : MonoBehaviour
             textoTiempo.text = string.Format("{0:00}:{1:00}", (int)(t / 60), (int)(t % 60));
             textoRequisitos.text = gm.ProgresoRequisitos();
         }
+        else
+        {
+            // Sin GameManager (se abrió la escena sin pasar por el Menú)
+            textoPuntaje.text = "Puntaje: -";
+            textoRequisitos.text = "Modo prueba: inicia desde el Menú para registrar puntaje y tiempo";
+        }
 
         if (jugador != null)
         {

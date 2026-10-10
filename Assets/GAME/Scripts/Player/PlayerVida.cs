@@ -45,7 +45,7 @@ public class PlayerVida : MonoBehaviour
         if (GameManager.Instance != null) GameManager.Instance.RegistrarGolpe(causa);
 
         if (VidasActuales <= 0) Morir(causa);
-        else StartCoroutine(Invulnerabilidad());
+        else { AudioManager.Sonar(a => a.golpe); StartCoroutine(Invulnerabilidad()); }
     }
 
     // Muerte por daño o por caída (la caída mata sin importar los corazones)
@@ -62,6 +62,7 @@ public class PlayerVida : MonoBehaviour
                 destino = cp.posicion;
         }
 
+        AudioManager.Sonar(a => a.muerte);
         pc.Reaparecer(destino);
         VidasActuales = VidasMax; // corazones completos
 

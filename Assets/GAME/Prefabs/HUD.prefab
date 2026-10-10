@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 6397691982234155736}
   - component: {fileID: 5162227693023829570}
   - component: {fileID: 7336808704505125501}
+  - component: {fileID: 2003557352038018063}
+  - component: {fileID: 5014420897945455863}
   m_Layer: 0
   m_Name: HUD
   m_TagString: Untagged
@@ -126,6 +128,7 @@ MonoBehaviour:
   contenedorCorazones: {fileID: 4042716492748897847}
   corazonLleno: {fileID: 21300000, guid: 2be908c4dcb3d944294da1d425ba18c8, type: 3}
   corazonVacio: {fileID: 21300000, guid: 099d9a606755a1a4b8e17ef04b67e58d, type: 3}
+  tamanoCorazon: 56
   textoPuntaje: {fileID: 2374012295591529794}
   textoTiempo: {fileID: 5197334269981845387}
   textoRequisitos: {fileID: 2331614826637480992}
@@ -134,6 +137,126 @@ MonoBehaviour:
   textoMensaje: {fileID: 8616199524878902298}
   panelInventario: {fileID: 4055680590730697214}
   textoInventario: {fileID: 267422327647751161}
+--- !u!82 &2003557352038018063
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 350944570571188188}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &5014420897945455863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 350944570571188188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c0ed855db5a05b4ebac03c2af6ad6f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AudioManager
+  fuente: {fileID: 2003557352038018063}
+  salto: {fileID: 8300000, guid: f5f9c643198fbf344afbf59e2bdce2d6, type: 3}
+  recoger: {fileID: 8300000, guid: ef5a0ef7e6c84da42a2afcbdd03dd70a, type: 3}
+  golpe: {fileID: 8300000, guid: ed6a3a201e1d59a41a197f10f61961d6, type: 3}
+  muerte: {fileID: 8300000, guid: 57392a24d525eba4f85f9deb347dde43, type: 3}
+  checkpoint: {fileID: 8300000, guid: 961734d46178b6049afda02bdf6e068c, type: 3}
+  palanca: {fileID: 8300000, guid: c77a5642ac1bbe94f9baa059f50acb64, type: 3}
+  elevador: {fileID: 8300000, guid: fdca502e8e495404a8eb9d46b500d332, type: 3}
+  golpeJefe: {fileID: 8300000, guid: d94d03faf4365284b961f8c4bd865e4c, type: 3}
+  victoria: {fileID: 8300000, guid: 08372691a5b920d4cb63763c0568fd40, type: 3}
+  espada: {fileID: 8300000, guid: 69f541c1371a9f248969d831ac02516b, type: 3}
 --- !u!1 &980128923694273662
 GameObject:
   m_ObjectHideFlags: 0

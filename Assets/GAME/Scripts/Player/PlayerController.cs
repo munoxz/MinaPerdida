@@ -14,6 +14,12 @@ public class PlayerController : MonoBehaviour
     [Header("Raycast frontal")]
     public float distanciaInteraccion = 1.2f;
 
+    [Header("Ataque con espada (tecla Z)")]
+    public float tiempoEntreAtaques = 0.45f;
+    public float retrasoGolpe = 0.12f;          // espera al cuadro en que la espada baja
+    public Vector2 tamanoGolpe = new Vector2(1.2f, 1.0f);
+    private float esperaAtaque;
+
     private Rigidbody2D rb;
     private Collider2D col;
     private SpriteRenderer sr;
@@ -72,6 +78,10 @@ public class PlayerController : MonoBehaviour
         if (PuedeMoverse && InteractuableCerca != null && LeerInteractuar())
             InteractuableCerca.Interactuar(this);
 
+        // Ataque con espada
+        if (esperaAtaque > 0) esperaAtaque -= Time.deltaTime;
+        if (PuedeMoverse && LeerAtaque() && esperaAtaque <= 0) Atacar();
+
         // Cuenta regresiva de la mejora temporal
         if (TiempoMejora > 0)
         {
@@ -94,6 +104,7 @@ public class PlayerController : MonoBehaviour
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, saltoBase * multSalto);
             pedirSalto = false;
+            AudioManager.Sonar(a => a.salto);
         }
     }
 
@@ -165,6 +176,26 @@ public class PlayerController : MonoBehaviour
         transform.position = posicion;
     }
 
+    // ===================== ATAQUE =====================
+    void Atacar()
+    {
+        esperaAtaque = tiempoEntreAtaques;
+        if (anim != null) anim.SetTrigger("Atacar");
+        AudioManager.Sonar(a => a.espada);
+        Invoke(nameof(AplicarGolpe), retrasoGolpe);
+    }
+
+    // Revisa con una caja lo que hay al frente y le hace daño al jefe si está ahí
+    void AplicarGolpe()
+    {
+        Vector2 centro = (Vector2)col.bounds.center + new Vector2(direccion * (col.bounds.extents.x + tamanoGolpe.x / 2f), 0f);
+        foreach (Collider2D c in Physics2D.OverlapBoxAll(centro, tamanoGolpe, 0f))
+        {
+            Jefe jefe = c.GetComponentInParent<Jefe>();
+            if (jefe != null) { jefe.RecibirAtaqueEspada(); return; }
+        }
+    }
+
     // ===================== ENTRADAS (sistema nuevo y viejo) =====================
     float LeerHorizontal()
     {
@@ -187,6 +218,16 @@ public class PlayerController : MonoBehaviour
         return kb != null && (kb.spaceKey.wasPressedThisFrame || kb.wKey.wasPressedThisFrame || kb.upArrowKey.wasPressedThisFrame);
 #else
         return Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow);
+#endif
+    }
+
+    bool LeerAtaque()
+    {
+#if ENABLE_INPUT_SYSTEM
+        var kb = Keyboard.current;
+        return kb != null && kb.zKey.wasPressedThisFrame;
+#else
+        return Input.GetKeyDown(KeyCode.Z);
 #endif
     }
 
